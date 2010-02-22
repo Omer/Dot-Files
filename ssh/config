@@ -1,0 +1,3 @@
+Host student-edi
+	HostName ssh.inf.ed.ac.uk
+	User s0831911

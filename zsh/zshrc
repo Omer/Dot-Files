@@ -1,0 +1,11 @@
+# 
+#  .zshrc
+#  
+#  Created by Omer Jakobinsky.
+# 
+
+. ~/.dotfiles/zsh/aliases
+. ~/.dotfiles/zsh/config
+
+# rvm-install added line:
+#if [[ -s /Users/omer/.rvm/scripts/rvm ]] && [[ $rvm_loaded_flag != 1 ]] ; then source /Users/omer/.rvm/scripts/rvm ; fi

@@ -1,0 +1,88 @@
+# 
+#  zsh config file
+#  
+#  Created by Omer Jakobinsky.
+#
+
+################## ZSH OPTIONS ##########################
+setopt auto_cd 		 # Automatically cd to paths
+setopt no_beep
+setopt correct
+#########################################################
+
+################### HISTORY #############################
+setopt append_history
+setopt no_hist_beep
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt inc_append_history
+setopt share_history
+
+HISTFILE=~/.zshhistory
+HISTSIZE=1024
+SAVEHIST=1024
+#########################################################
+
+################### PROMPT ##############################
+PROMPT='[%n@%m:%.]%% ' # default prompt
+RPROMPT='[%T]' 				 # prompt for right side of screen
+#########################################################
+
+################ COMPLETION #############################
+setopt always_to_end
+setopt complete_in_word
+setopt list_packed
+setopt no_menu_complete
+
+autoload -U compinit && compinit
+zmodload -i zsh/complist
+
+# general completion technique
+zstyle ':completion:*' completer \
+    _force_rehash _ignored _expand _complete _match _prefix _correct _approximate
+
+# completion caching
+zstyle ':completion:*' use-cache 'yes'
+zstyle ':completion:*' cache-path ~/.zshcache
+
+# completion with globbing
+zstyle ':completion:*' glob 'yes'
+
+# selecting completion by cursor
+zstyle ':completion:*' menu select=long-list select=3
+
+# colors in completion
+case $OSTYPE in
+    linux*)
+        eval $(dircolors)
+        zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+        ;;
+    freebsd*)
+        zstyle ':completion:*' list-colors ''
+        ;;
+esac
+
+# formatting and messages
+zstyle ':completion:*' verbose 'yes'
+zstyle ':completion:*:descriptions' format "%B-- %d --%b"
+zstyle ':completion:*:messages' format "%B--${green} %d ${nocolor}--%b"
+zstyle ':completion:*:warnings' format "%B--${red} no match for: %d ${nocolor}--%b"
+zstyle ':completion:*:corrections' format "%B--${yellow} %d  (errors %e)${nocolor}--%b"
+zstyle ':completion:*' group-name ''
+
+# show sections in manuals
+zstyle ':completion:*:manuals' separate-sections 'yes'
+
+# describe options
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d' 
+
+# ignore completion functions (until the _ignored completer)
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+#local _myhosts
+_myhosts=( ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
+zstyle ':completion:*' hosts $_myhosts
+zstyle ":completion:*" users omer omerj s0831911
+
+#########################################################

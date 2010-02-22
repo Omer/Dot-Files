@@ -1,0 +1,16 @@
+# 
+#  .zshenv
+#  
+#  Created by Omer Jakobinsky.
+#  Version 0.1
+#
+
+################## VARIABLES ############################
+export EDITOR="mate -w" 							 # Defualt Editor
+export CLICOLOR=1											 # Enable Colors	
+export LSCOLORS=bxFxCxDxBxegedabagacbx # Pick colors
+#########################################################
+
+################## PATH #################################
+path=(/usr/local/bin /opt/local/bin $path)
+#########################################################

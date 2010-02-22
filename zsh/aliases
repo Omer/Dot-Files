@@ -1,0 +1,78 @@
+# 
+#  .aliases
+#  
+#  Created by Omer Jakobinsky.
+#
+
+################## ALIASES ##############################
+alias ..='cd ..'
+alias cl='clear'
+alias la='ls -a'
+alias ll='ls -lh'
+alias lla='ls -lah'
+alias lsd='ls -d *(-/N)' # list visible directories
+
+alias head='head -n20'
+alias tail='tail -n20'
+alias tu='top -o cpu' 	# Sort by CPU
+alias tm='top -o vsize' # Sort by Memory
+
+#--------- Utility
+alias reload='source ~/.dotfiles/zsh/aliases'
+alias ea='mate -w ~/.dotfiles/zsh/aliases && reload' # Edit aliases
+alias ee="mate ~/bin/dotfiles/bash/env"
+
+#--------- Git
+alias g='git status'
+alias gl='git pull'
+alias gp='git push'
+alias gd='git diff | mate'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gk='gitk &'
+alias eg='mate .git/config'
+
+#--------- Ruby
+alias irb='irb --simple-prompt'
+
+#--------- Rails
+alias ss='./script/server'
+alias sg='./script/generate'
+alias sc='./script/console'
+alias r='rake'
+
+#--------- TextMate
+alias et='mate .' # edit the current directory.
+alias ett='mate app config lib db public spec test vendor/plugins Rakefile Capfile README'
+alias etts='mate app config lib db public script spec test vendor/plugins Rakefile Capfile README'
+
+#--------- Finder
+alias o='open . &'
+#########################################################
+
+################# FUNCTIONS #############################
+_force_rehash()
+{
+    (( CURRENT == 1 )) && rehash
+    return 1
+}
+function cr() {
+ cd ~/rails_projects/$*
+}
+function take() { 
+    mkdir -p "$1"
+    cd "$1" 
+}
+function new-git() { 
+    mkdir -p "$1"
+    cd "$1" 
+		git init
+}
+function new-rails() { 
+		rails ~/rails_projects/"$1"
+		cd ~/rails_projects/"$1"
+		git init
+}
+#########################################################
