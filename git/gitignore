@@ -1,0 +1,30 @@
+##
+# Basic ignore list for latex projects.
+log/*.log
+tmp/*
+tmp/**/*
+doc/api
+doc/app
+db/*.sqlite3
+*.swp
+*~
+*.txt
+
+##
+# Ignore Latex auxiliary files.
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.pdf
+*.bbl
+*.blg
+*.pdfsync
+
+##
+# Ignore Finder(OS X) "trash".
+.DS_Store
+
+##
+# Ignore TextMate Projects.
+*.tmproj

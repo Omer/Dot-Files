@@ -6,6 +6,6 @@
 
 . ~/.dotfiles/zsh/aliases
 . ~/.dotfiles/zsh/config
+. ~/.dotfiles/zsh/functions
 
-# rvm-install added line:
-#if [[ -s /Users/omer/.rvm/scripts/rvm ]] && [[ $rvm_loaded_flag != 1 ]] ; then source /Users/omer/.rvm/scripts/rvm ; fi
+if [[ -s /Users/omer/.rvm/scripts/rvm ]] ; then source /Users/omer/.rvm/scripts/rvm ; fi

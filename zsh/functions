@@ -1,0 +1,209 @@
+################# FUNCTIONS #############################
+_force_rehash()
+{
+    (( CURRENT == 1 )) && rehash
+    return 1
+}
+function cr() {
+ cd ~/rails_projects/$*
+}
+function mkcd() { 
+	if [[ -z "$1" ]] ; then
+		echo "usage: $fg[red]mkcd $reset_color< directory >"
+		echo "       Creates the specified directory and then changes it to pwd"
+	else
+		if [[ ! -d "$1" ]] ; then
+  		mkdir -p "$1"
+			cd "$1"
+		else
+  		cd "$1"
+		fi
+	fi
+}
+function refactor() {
+	date "+%b %d, %Y %H:%M:%S" > /tmp/refactoring_report
+	echo "# Duplication" >> /tmp/refactoring_report
+	echo "## Flay Report" >> /tmp/refactoring_report
+	flay ./**/*.rb >> /tmp/refactoring_report
+	
+	echo "# Code Smells" >> /tmp/refactoring_report
+	echo "## Reek Report" >> /tmp/refactoring_report
+	reek ./**/*.rb >> /tmp/refactoring_report
+	echo "\n## Roodi Report" >> /tmp/refactoring_report
+	roodi ./**/*.rb >> /tmp/refactoring_report
+	
+	cat refactoring_report > dummy
+	cat /tmp/refactoring_report dummy > refactoring_report
+	rm dummy
+	
+	mate refactoring_report
+}
+function __confirm() {
+	while true
+	do
+		echo -n "Are you sure you want to contiune [yYnN]: "
+		read CONFIRM
+		case $CONFIRM in
+			y|Y|YES|yes|Yes) break ;;
+			n|N|no|NO|No)
+			echo Aborting - you entered $CONFIRM
+			return 0
+			;;
+			*) echo "Please enter only y or n"
+		esac
+	done
+}
+
+#function new-git() { 
+#	if [[ -z $1 ]] ; then
+#		echo "usage: $fg[red]new-git $reset_color< repository_name >"
+#		echo "       Initialise an empty Git repository"
+#		return 1
+#	else
+#		if [[ ! -d $1 ]] ; then
+#    	mkdir -p $1
+#    	cd $1
+#			git init --quiet
+#		else
+#			echo "The directory $1 is already exists."
+#			__confirm
+#			git init --quiet
+#		fi
+#	fi
+#}
+function new-rails() { 
+	if [[ -z $1 ]] ; then
+		echo "usage: $fg[red]new-rails $reset_color< project_name >"
+		echo "       Creates a new rails project and initialise an empty Git repository"
+	else
+		if [[ ! -d $1 ]] ; then
+			rails ~/rails_projects/"$1" --quiet
+			cd ~/rails_projects/"$1"
+			git init --quiet
+		else
+			echo -n "Please confirm (y or n) :"
+			read CONFIRM
+			case $CONFIRM in
+				n|N|no|NO|No) 
+					echo "Aborting" 
+					exit
+					;;
+				y|Y|YES|yes|Yes)
+					cd $1
+					git init --quiet
+					;;
+				*) echo "Please enter only y or n"
+			esac
+		fi
+	fi
+}
+extract() {
+	if [[ -z "$1" ]] ; then
+		echo "usage: $fg[red]extract $reset_color< filename >"
+		echo "       Extract the file specified based on the extension"
+	elif [[ -f $1 ]] ; then
+		case ${(L)1} in
+			*.tar.bz2)  tar -jxvf $1    ;;
+      *.tar.gz)   tar -zxvf $1    ;;
+      *.bz2)      bunzip2 $1      ;;
+      *.gz)       gunzip $1       ;;
+      *.jar)      unzip $1        ;;
+      *.rar)      unrar x $1      ;;
+      *.tar)      tar -xvf $1     ;;
+      *.tbz2)     tar -jxvf $1    ;;
+      *.tgz)      tar -zxvf $1    ;;
+      *.zip)      unzip $1        ;;
+      *.Z)        uncompress $1   ;;
+      *)          echo "Unable to extract '$1' :: Unknown extension"
+		esac
+	else
+		echo "File ('$1') does not exist!"
+  fi
+}
+unkey_host() {
+	if [[ -z "$1" ]] ; then
+		echo "usage: $fg[red]unkey_host $reset_color< host >"
+   	echo "       Removes the specified host from ssh known host list"
+	else
+		sed -i -e "/$1/d" $HOME/.ssh/known_hosts
+  fi
+}
+
+# Set the terminal title in OS X, stolen from http://tinyurl.com/5u9wfr
+case $TERM in (*xterm*|ansi)
+	function settab { print -Pn "\e]1;%n@%m: %~\a" }
+	function settitle { print -Pn "\e]2;%n@%m: %~\a" }
+	function chpwd { settab; settitle }
+	settab; settitle
+	;;
+esac
+
+# Git stuff stolen from http://github.com/bryanl/zshkit
+if [[ -x `which git` ]]; then
+	function git-branch-name () {
+		git branch 2> /dev/null | grep '^\*' | sed 's/^\*\ //'
+	}
+	function git-dirty () {
+		git status 2> /dev/null | grep "nothing to commit (working directory clean)"
+		echo $?
+	}
+	function gsrb () {
+		branch=$(git-branch-name) 
+		git checkout master
+		git svn rebase
+		git checkout "${branch}"
+		git rebase master
+	}
+  function git-need-to-push() {
+  if pushtime=$(echo $1 | grep 'Your branch is ahead' 2> /dev/null); then
+    echo "↑ "
+  fi
+  }
+	function git-prompt() {
+		gstatus=$(git status 2> /dev/null)
+		branch=$(echo $gstatus | head -1 | sed 's/^# On branch //')
+		dirty=$(echo $gstatus | sed 's/^#.*$//' | tail -2 | grep 'nothing to commit (working directory clean)'; echo $?)
+		if [[ x$branch != x ]]; then
+			dirty_color=$fg[green]
+      push_status=$(git-need-to-push $gstatus 2> /dev/null)
+			if [[ $dirty = 1 ]] { dirty_color=$fg[red] }
+			[ x$branch != x ] && echo " %{$dirty_color%}$branch%{$reset_color%} $push_status"
+		fi
+	}
+	function git-scoreboard () {
+		git log | grep '^Author' | sort | uniq -ci | sort -r
+	}
+	function git-track () {
+		branch=$(git-branch-name)
+		git config branch.$branch.remote origin
+		git config branch.$branch.merge refs/heads/$branch
+		echo "tracking origin/$tracking"
+	}
+	function github-init () {
+		git config branch.$(git-branch-name).remote origin
+		git config branch.$(git-branch-name).merge refs/heads/$(git-branch-name)
+	}
+ 
+	function github-url () {
+		git config remote.origin.url | sed -En 's/git(@|:\/\/)github.com(:|\/)(.+)\/(.+).git/https:\/\/github.com\/\3\/\4/p'
+	}
+ 
+	# Seems to be the best OS X jump-to-github alias from http://tinyurl.com/2mtncf
+	function github-go () {
+		open $(github-url)
+	}
+ 
+	function nhgk () {
+		nohup gitk --all &
+	}
+fi
+
+# Welcome message for login shells
+#if [[ $SHLVL -eq 1 ]] ; then
+#    echo
+#    print -P "\e[1;32m Welcome to: \e[1;34m%m"
+#    print -P "\e[1;32m Running: \e[1;34m`uname -srm`\e[1;32m on \e[1;34m%l"
+#    print -P "\e[1;32m It is:\e[1;34m %D{%r} \e[1;32m on \e[1;34m%D{%A %b %f %G}"
+#    echo
+#fi
+#########################################################

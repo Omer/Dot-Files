@@ -12,8 +12,8 @@ alias ll='ls -lh'
 alias lla='ls -lah'
 alias lsd='ls -d *(-/N)' # list visible directories
 
-alias head='ghead'
-alias tail='gtail'
+alias head='head -n20'
+alias tail='tail -n20'
 
 #--------- Processes
 alias tu='top -o cpu' 	# Sort by CPU
@@ -23,8 +23,7 @@ alias tm='top -o vsize' # Sort by Memory
 alias reload='source ~/.dotfiles/zsh/aliases'
 alias ea="mate ~/.dotfiles/zsh/aliases"
 alias ear='mate -w ~/.dotfiles/zsh/aliases && reload' # Edit aliases
-alias eenv="mate ~/.dotfiles/zsh/zshenv"
-alias econfig="mate ~/.dotfiles/zsh/config"
+alias ee="mate ~/.dotfiles/zsh/zshenv"
 
 
 #--------- Git

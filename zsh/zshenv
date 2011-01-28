@@ -6,11 +6,17 @@
 #
 
 ################## VARIABLES ############################
+export LC_ALL="en_GB"						 # Set Language 
+export LANG="en_GB"
 export EDITOR="mate -w" 							 # Defualt Editor
 export CLICOLOR=1											 # Enable Colors	
-export LSCOLORS=bxFxCxDxBxegedabagacbx # Pick colors
+export LSCOLORS=bxFxbxDxBxegedabagabbx # Pick colors
+export PGDATA="/usr/local/postgres_data"
+export ARCHFLAGS="-arch x86_64"
+export VIM_APP_DIR="/Applications/\ Development/"
+export PYTHONPATH="/usr/local/lib/python2.6/site-packages/:$PYTHONPATH"
 #########################################################
 
 ################## PATH #################################
-path=(/usr/local/bin /opt/local/bin $path)
+path=(~/bin /usr/local/bin /user/local /usr/local/sbin /usr/local/mysql /usr/local/mysql/bin /usr/local/Cellar/postgresql/8.4.4/bin/ /usr/local/Cellar/coreutils/8.5/bin/ $path)
 #########################################################

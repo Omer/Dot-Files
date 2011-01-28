@@ -8,6 +8,9 @@
 setopt auto_cd 		 # Automatically cd to paths
 setopt no_beep
 setopt correct
+
+autoload colors ; colors
+setopt prompt_subst # Allow for functions in the prompt.
 #########################################################
 
 ################### HISTORY #############################
@@ -24,8 +27,7 @@ SAVEHIST=1024
 #########################################################
 
 ################### PROMPT ##############################
-PROMPT='[%n@%m:%.]%% ' # default prompt
-RPROMPT='[%T]' 				 # prompt for right side of screen
+PROMPT='%{$reset_color%}`git-prompt`%(!.#.>) '
 #########################################################
 
 ################ COMPLETION #############################

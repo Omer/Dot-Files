@@ -1,3 +1,9 @@
 Host student-edi
 	HostName ssh.inf.ed.ac.uk
 	User s0831911
+
+Host nowygrunwald
+    Hostname 178.79.140.157
+    User nowygrunwald
+    # Port 22
+    # LocalForward 3307 127.0.0.1:3306
