@@ -1,0 +1,46 @@
+[user]
+	name = Omer Jakobinsky
+	email = s0831911@sms.ed.ac.uk
+[color]
+	ui = auto
+[apply]
+	whitespace = nowarn
+[core]
+	editor = vim
+	excludesfile = /Users/omer/.gitignore
+	quotepath = false
+
+[alias]
+  ai = add --interactive
+
+  c = commit
+  # commit with a message
+  cm = commit -m
+  cma = commit -a -m
+  # amending the previous commit
+  ca = commit --amend
+  caa = commit -a --amend -C HEAD
+
+  co = checkout
+
+  # reset
+  ## soft resets
+  r = reset
+  r1 = reset HEAD^
+  r2 = reset HEAD^^
+  ## hard resets
+  rh = reset --hard
+  rh1 = reset HEAD^ --hard
+  rh1 = reset HEAD^^ --hard
+
+  # shortcuts for commands
+  s = status
+  d = diff
+  a = add
+  co = checkout
+  b = branch
+  l = log
+  f = fetch
+  r = reset
+  p = push
+

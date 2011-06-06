@@ -8,7 +8,7 @@
 ################## VARIABLES ############################
 export LC_ALL="en_GB"						 # Set Language 
 export LANG="en_GB"
-export EDITOR="mate -w" 							 # Defualt Editor
+export EDITOR="/usr/bin/vim" 							 # Defualt Editor
 export CLICOLOR=1											 # Enable Colors	
 export LSCOLORS=bxFxbxDxBxegedabagabbx # Pick colors
 export PGDATA="/usr/local/postgres_data"

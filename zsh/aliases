@@ -28,25 +28,17 @@ alias econfig="mate ~/.dotfiles/zsh/config"
 
 
 #--------- Git
-alias g='git status'
-alias gl='git pull'
-alias gp='git push'
-alias gd='git diff | mate'
-alias gc='git commit -v'
-alias gca='git commit -v -a'
-alias gb='git branch'
-alias gba='git branch -a'
-alias gk='gitk &'
-alias eg='mate .git/config'
+alias g='git'
 
-#--------- Ruby
+#--------- Ruby & Rails
 alias irb='irb --simple-prompt -r irb/completion'
 
-#--------- Rails
-alias ss='./script/server'
-alias sg='./script/generate'
-alias sc='./script/console'
-alias r='rake'
+# alias ss='./script/server'
+# alias sg='./script/generate'
+# alias sc='./script/console'
+# alias r='rake'
+
+# alias rspec='rspec --color --format doc'
 
 #--------- Heroku
 alias ph='git push heroku master'
@@ -55,6 +47,9 @@ alias ph='git push heroku master'
 alias et='mate .' # edit the current directory.
 alias ett='mate app config lib db public spec test vendor/plugins Rakefile Capfile README'
 alias etts='mate app config lib db public script spec test vendor/plugins Rakefile Capfile README'
+
+#--------- Vim
+alias v='mvim'
 
 #--------- Finder
 alias o='open . &'
